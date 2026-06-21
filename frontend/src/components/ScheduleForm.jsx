@@ -5,6 +5,7 @@ import { ALARM_SOUNDS } from '../constants/alarmSounds';
 import toast from 'react-hot-toast';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
+import { API_URL } from '../config';
 import './ScheduleForm.css';
 
 const ScheduleForm = ({ isOpen, onClose, initialData = null, defaultDate = null }) => {
@@ -158,7 +159,7 @@ const ScheduleForm = ({ isOpen, onClose, initialData = null, defaultDate = null 
                     Authorization: `Bearer ${user.token}` 
                 }
             };
-            const { data } = await axios.post('http://127.0.0.1:5000/api/schedules/upload-audio', uploadFormData, config);
+            const { data } = await axios.post(`${API_URL}/api/schedules/upload-audio`, uploadFormData, config);
             setFormData({ ...formData, alarmSound: data.url });
             setUploadedFileName(file.name);
             toast.success('Audio uploaded successfully!');

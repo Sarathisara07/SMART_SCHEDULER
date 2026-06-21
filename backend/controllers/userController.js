@@ -82,7 +82,7 @@ const uploadProfileImage = asyncHandler(async (req, res) => {
     }
 
     // Build the URL path for the uploaded file
-    const imageUrl = `http://127.0.0.1:${process.env.PORT || 5000}/uploads/profiles/${req.file.filename}`;
+    const imageUrl = `${req.protocol}://${req.get('host')}/uploads/profiles/${req.file.filename}`;
 
     const user = await User.findById(req.user.id);
     if (user) {

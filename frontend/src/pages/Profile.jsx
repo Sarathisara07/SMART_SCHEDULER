@@ -4,6 +4,7 @@ import toast from 'react-hot-toast';
 import { useAuth } from '../context/AuthContext';
 import { useSchedules } from '../context/ScheduleContext';
 import { User, Mail, Shield, Calendar, Settings, Camera, Loader2 } from 'lucide-react';
+import { API_URL } from '../config';
 import './Profile.css';
 
 const Profile = () => {
@@ -26,7 +27,7 @@ const Profile = () => {
                     Authorization: `Bearer ${user.token}` 
                 }
             };
-            const { data } = await axios.post('http://127.0.0.1:5000/api/users/upload', formData, config);
+            const { data } = await axios.post(`${API_URL}/api/users/upload`, formData, config);
             updateUser({ profileImage: data.profileImage });
             toast.success('Profile picture updated!');
         } catch (error) {

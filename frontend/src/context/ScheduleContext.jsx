@@ -1,6 +1,7 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 import { useAuth } from './AuthContext';
+import { API_URL } from '../config';
 
 const ScheduleContext = createContext();
 
@@ -16,7 +17,7 @@ export const ScheduleProvider = ({ children }) => {
             const config = {
                 headers: { Authorization: `Bearer ${user.token}` }
             };
-            const { data } = await axios.get('http://127.0.0.1:5000/api/schedules', config);
+            const { data } = await axios.get(`${API_URL}/api/schedules`, config);
             setSchedules(data);
         } catch (error) {
             console.error('Error fetching schedules:', error);
@@ -29,7 +30,7 @@ export const ScheduleProvider = ({ children }) => {
         const config = {
             headers: { Authorization: `Bearer ${user.token}` }
         };
-        const { data } = await axios.post('http://127.0.0.1:5000/api/schedules', scheduleData, config);
+        const { data } = await axios.post(`${API_URL}/api/schedules`, scheduleData, config);
         setSchedules([...schedules, data]);
         return data;
     };
@@ -38,7 +39,7 @@ export const ScheduleProvider = ({ children }) => {
         const config = {
             headers: { Authorization: `Bearer ${user.token}` }
         };
-        const { data } = await axios.put(`http://127.0.0.1:5000/api/schedules/${id}`, scheduleData, config);
+        const { data } = await axios.put(`${API_URL}/api/schedules/${id}`, scheduleData, config);
         setSchedules(schedules.map(s => s._id === id ? data : s));
         return data;
     };
@@ -47,7 +48,7 @@ export const ScheduleProvider = ({ children }) => {
         const config = {
             headers: { Authorization: `Bearer ${user.token}` }
         };
-        await axios.delete(`http://127.0.0.1:5000/api/schedules/${id}`, config);
+        await axios.delete(`${API_URL}/api/schedules/${id}`, config);
         setSchedules(schedules.filter(s => s._id !== id));
     };
 
